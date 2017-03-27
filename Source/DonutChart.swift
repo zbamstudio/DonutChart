@@ -98,9 +98,8 @@ class DonutChart : UIView
         paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineHeightMultiple = 0.8
         paragraphStyle.alignment = NSTextAlignment.center
-        (self.layer as! AnimationLayer).animationCallBack = updateDrawing
-        
-        
+        (self.layer as! AnimationLayer).animationCallBack = setDisplayIsDirty
+
     }
     
     required init?( coder aDecoder: NSCoder )
@@ -108,7 +107,7 @@ class DonutChart : UIView
         
         self.progress = 0
         super.init( coder: aDecoder )
-        (self.layer as! AnimationLayer).animationCallBack = updateDrawing
+        (self.layer as! AnimationLayer).animationCallBack = setDisplayIsDirty
     }
     
     func create()
@@ -208,13 +207,18 @@ class DonutChart : UIView
             innerCircleLayer.strokeEnd = CGFloat(layerProgress)
             let percentage = Int(round((layerProgress * 100)))
             updateText(percentage)
-            self.setNeedsDisplay()
         }
-        
     }
-    
-    
-    
-    
-    
+
+    fileprivate func setDisplayIsDirty()
+    {
+        self.setNeedsDisplay()
+    }
+
+    override func setNeedsDisplay()
+    {
+        updateDrawing()
+    }
+
+
 }
