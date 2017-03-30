@@ -243,5 +243,11 @@ class DonutChart : UIView
         updateDrawing()
     }
 
+}
 
+public enum DonutChartAnimatableProperties : String
+{
+    case progress = "progress"
+    case radius = "radius"
+    case thickness = "thickness"
 }

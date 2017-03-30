@@ -26,8 +26,8 @@ import QuartzCore
 
 class AnimationLayer: CALayer
 {
+    var animationCallBack : (()->())?
     var progress: Double = 0
-    var animationCallBack: (()->())?
 
     override init() {
         super.init()
@@ -44,6 +44,7 @@ class AnimationLayer: CALayer
     }
     
     override class func needsDisplay(forKey key: String) -> Bool {
+
         if(key == "progress"){
             return true
         }
@@ -59,3 +60,4 @@ class AnimationLayer: CALayer
     }
     
 }
+
