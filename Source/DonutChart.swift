@@ -25,9 +25,9 @@
 import Foundation
 import UIKit
 
-enum OutlinePosition: Double {
+enum OutlinePlacement: Double {
 
-    static var all:[OutlinePosition] = [.Inside,.Center,.Outside]
+    static var all:[OutlinePlacement] = [.Inside, .Center, .Outside]
 
     case Inside = -1.0
     case Center = 0.0
@@ -38,8 +38,8 @@ enum OutlinePosition: Double {
 @IBDesignable
 class DonutChart: UIView {
 
-    fileprivate var outerCircleLayer: CAShapeLayer?
-    fileprivate var innerCircleLayer: CAShapeLayer?
+    fileprivate var outlineLayer: CAShapeLayer?
+    fileprivate var progressLayer: CAShapeLayer?
     fileprivate var percentageText: UILabel?
     fileprivate var paragraphStyle: NSMutableParagraphStyle?
     fileprivate var attributedString: NSMutableAttributedString!
@@ -52,8 +52,8 @@ class DonutChart: UIView {
     override var tintColor: UIColor! {
         didSet {
 
-            innerCircleLayer?.strokeColor = tintColor.cgColor
-            outerCircleLayer?.strokeColor = tintColor.cgColor
+            progressLayer?.strokeColor = tintColor.cgColor
+            outlineLayer?.strokeColor = tintColor.cgColor
             percentageText?.textColor = tintColor
             setDisplayIsDirty()
         }
@@ -62,8 +62,8 @@ class DonutChart: UIView {
     @IBInspectable
     var radius: Double = 100 {
         didSet {
-            setFrameOfOuterCircleLayer()
-            setFrameOfInnerCircleLayer()
+            setFrameOfOutlineLayer()
+            setFrameOfProgressLayer()
             setFrameOfTextField()
             setDisplayIsDirty()
         }
@@ -72,8 +72,10 @@ class DonutChart: UIView {
     @IBInspectable
     var thickness: Double = 10 {
         didSet {
-            setFrameOfOuterCircleLayer()
-            setFrameOfInnerCircleLayer()
+            
+            progressLayer?.lineWidth = CGFloat(thickness)
+            setFrameOfOutlineLayer()
+            setFrameOfProgressLayer()
             setFrameOfTextField()
             setDisplayIsDirty()
         }
@@ -82,7 +84,7 @@ class DonutChart: UIView {
     @IBInspectable
     var outlineWidth: Double = 1 {
         didSet {
-            self.outerCircleLayer?.lineWidth = CGFloat(outlineWidth)
+            self.outlineLayer?.lineWidth = CGFloat(outlineWidth)
             setDisplayIsDirty()
         }
 
@@ -134,8 +136,35 @@ class DonutChart: UIView {
             setDisplayIsDirty()
         }
     }
+    
+    private var _outlinePlacementInterfaceAdapter: String = "inside"
+    
+    @IBInspectable var outlinePlacementInterfaceAdapter: String
+    {
+        set
+        {
+            _outlinePlacementInterfaceAdapter = newValue
+            switch _outlinePlacementInterfaceAdapter {
+            case "inside":
+                outlinePlacement = .Inside
+            case "center":
+                outlinePlacement = .Center
+            case "outside":
+                outlinePlacement = .Outside
+            default:
+                outlinePlacement = .Inside
+            }
+            setFrameOfOutlineLayer()
+            setFrameOfProgressLayer()
+            setFrameOfTextField()
+            setDisplayIsDirty()
+        }
+        get{
+            return _outlinePlacementInterfaceAdapter
+        }
+    }
 
-    var outlineThicknessPosition: OutlinePosition = .Center {
+    var outlinePlacement: OutlinePlacement = .Inside {
         didSet {
 
             setDisplayIsDirty()
@@ -182,8 +211,8 @@ class DonutChart: UIView {
         createParagraphStyle()
         createLayers()
 
-        setFrameOfOuterCircleLayer()
-        setFrameOfInnerCircleLayer()
+        setFrameOfOutlineLayer()
+        setFrameOfProgressLayer()
         setFrameOfTextField()
         createFonts()
         updateText()
@@ -218,18 +247,18 @@ class DonutChart: UIView {
 
     fileprivate func createLayers() {
 
-        outerCircleLayer = CAShapeLayer()
-        innerCircleLayer = CAShapeLayer()
+        outlineLayer = CAShapeLayer()
+        progressLayer = CAShapeLayer()
 
-        self.layer.addSublayer(outerCircleLayer!)
-        self.layer.addSublayer(innerCircleLayer!)
+        self.layer.addSublayer(outlineLayer!)
+        self.layer.addSublayer(progressLayer!)
 
-        outerCircleLayer?.lineWidth = CGFloat(outlineWidth)
-        outerCircleLayer?.strokeColor = tintColor.cgColor
-        outerCircleLayer?.fillColor = UIColor.clear.cgColor
+        outlineLayer?.lineWidth = CGFloat(outlineWidth)
+        outlineLayer?.strokeColor = tintColor.cgColor
+        outlineLayer?.fillColor = UIColor.clear.cgColor
 
-        innerCircleLayer?.lineWidth = CGFloat(thickness)
-        innerCircleLayer?.fillColor = UIColor.clear.cgColor
+        progressLayer?.lineWidth = CGFloat(thickness)
+        progressLayer?.fillColor = UIColor.clear.cgColor
 
     }
 
@@ -237,7 +266,7 @@ class DonutChart: UIView {
 
         var textFrame: CGRect
 
-        let offset = thickness * outlineThicknessPosition.rawValue
+        let offset = thickness * outlinePlacement.rawValue
         let textFieldWidth = radius - offset
 
         textFrame = CGRect(x: Double(self.frame.width) / 2 - radius + textFieldWidth / 2 + offset/2,
@@ -248,34 +277,34 @@ class DonutChart: UIView {
         percentageText?.frame = textFrame
     }
 
-    fileprivate func setFrameOfOuterCircleLayer() {
+    fileprivate func setFrameOfOutlineLayer() {
 
-        let outlineCirclePositionOffset = thickness * outlineThicknessPosition.rawValue;
+        let outlineCirclePositionOffset = thickness * outlinePlacement.rawValue;
 
         let rect = CGRect(x: Double(self.frame.width) / 2 - radius - outlineCirclePositionOffset / 2,
                 y: Double(self.frame.height) / 2 - radius - outlineCirclePositionOffset / 2,
                 width: radius * 2 + outlineCirclePositionOffset,
                 height: radius * 2 + outlineCirclePositionOffset)
 
-        outerCircleLayer?.path = UIBezierPath(roundedRect: rect, cornerRadius: CGFloat(radius)).cgPath
+        outlineLayer?.path = UIBezierPath(roundedRect: rect, cornerRadius: CGFloat(radius)).cgPath
 
     }
 
-    fileprivate func setFrameOfInnerCircleLayer() {
+    fileprivate func setFrameOfProgressLayer() {
 
         let rect = CGRect(x: Double(self.frame.width) / 2 - radius,
                 y: Double(self.frame.height) / 2 - radius,
                 width: (radius) * 2,
                 height: (radius) * 2)
 
-        innerCircleLayer?.path = UIBezierPath(roundedRect: rect, cornerRadius: CGFloat(radius * 2)).cgPath
-        innerCircleLayer?.strokeColor = tintColor.cgColor
+        progressLayer?.path = UIBezierPath(roundedRect: rect, cornerRadius: CGFloat(radius * 2)).cgPath
+        progressLayer?.strokeColor = tintColor.cgColor
 
     }
 
     fileprivate func updateText() {
 
-        let percentage = Int((layerProgress * 100.0))
+        let percentage = Int(ceil(layerProgress * 100.0))
         var percentageString = "\(percentage)"
 
         attributedString = NSMutableAttributedString(string: percentageString + "\n%")
@@ -294,7 +323,7 @@ class DonutChart: UIView {
 
     fileprivate func updateProgress() {
 
-        innerCircleLayer?.strokeEnd = CGFloat(layerProgress)
+        progressLayer?.strokeEnd = CGFloat(layerProgress)
         updateText()
     }
     

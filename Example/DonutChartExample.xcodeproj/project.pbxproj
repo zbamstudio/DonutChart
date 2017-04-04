@@ -15,7 +15,6 @@
 		DA0612D11E8888940087D70E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DA0612CF1E8888940087D70E /* LaunchScreen.storyboard */; };
 		DA0612E11E889DAE0087D70E /* AnimationLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0612E01E889DAE0087D70E /* AnimationLayer.swift */; };
 		DA0612E31E889DB10087D70E /* DonutChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0612E21E889DB10087D70E /* DonutChart.swift */; };
-		DAEC9EEF1E93F7F300A1832E /* DonutChartViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAEC9EEE1E93F7F300A1832E /* DonutChartViewCell.swift */; };
 		F3DA34EF6C3B09065675E988 /* ArrayExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3DA3943F65C582AE79B43D3 /* ArrayExtensions.swift */; };
 /* End PBXBuildFile section */
 
@@ -31,7 +30,6 @@
 		DA0612D21E8888940087D70E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DA0612E01E889DAE0087D70E /* AnimationLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AnimationLayer.swift; path = ../../Source/AnimationLayer.swift; sourceTree = "<group>"; };
 		DA0612E21E889DB10087D70E /* DonutChart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DonutChart.swift; path = ../../Source/DonutChart.swift; sourceTree = "<group>"; };
-		DAEC9EEE1E93F7F300A1832E /* DonutChartViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DonutChartViewCell.swift; sourceTree = "<group>"; };
 		E33F980958BF40050499379D /* Pods-DonutChartExample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DonutChartExample.release.xcconfig"; path = "Pods/Target Support Files/Pods-DonutChartExample/Pods-DonutChartExample.release.xcconfig"; sourceTree = "<group>"; };
 		F3DA3943F65C582AE79B43D3 /* ArrayExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArrayExtensions.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -94,7 +92,6 @@
 				DA0612CD1E8888940087D70E /* Assets.xcassets */,
 				DA0612CF1E8888940087D70E /* LaunchScreen.storyboard */,
 				DA0612D21E8888940087D70E /* Info.plist */,
-				DAEC9EEE1E93F7F300A1832E /* DonutChartViewCell.swift */,
 				F3DA3943F65C582AE79B43D3 /* ArrayExtensions.swift */,
 			);
 			path = DonutChartExample;
@@ -228,7 +225,6 @@
 				DA0612C91E8888940087D70E /* ViewController.swift in Sources */,
 				DA0612C71E8888940087D70E /* AppDelegate.swift in Sources */,
 				DA0612E11E889DAE0087D70E /* AnimationLayer.swift in Sources */,
-				DAEC9EEF1E93F7F300A1832E /* DonutChartViewCell.swift in Sources */,
 				DA0612E31E889DB10087D70E /* DonutChart.swift in Sources */,
 				F3DA34EF6C3B09065675E988 /* ArrayExtensions.swift in Sources */,
 			);

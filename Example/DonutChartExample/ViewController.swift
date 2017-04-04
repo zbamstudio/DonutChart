@@ -26,52 +26,12 @@ import UIKit
 import Darwin
 import ChameleonFramework
 
-class ViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
-
-    @IBOutlet weak var collectionView: UICollectionView!
-    
-    let fontNameArray : [String] = ["Arial", "AmericanTypewriter", "AppleSDGothicNeo-Bold","Arial-BoldItalicMT","Avenir-Black","AvenirNext-Medium","DINAlternate-Bold"]
-    
-    fileprivate let itemCount = 20;
+class ViewController: UIViewController{
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        let color = UIColor.flatBlack
-        collectionView.backgroundColor = color
+        let color = UIColor.white
         self.view.backgroundColor = color
-        collectionView.reloadData()
-    }
-
-    open func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 1
-    }
-
-    open func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return itemCount;
-    }
-
-    open func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "donutChartCell", for: indexPath)
-       
-        let fontName = fontNameArray.random()
-        let radius = Double(arc4random_uniform(30)) + 25
-        let fontSize = CGFloat(arc4random_uniform(UInt32(radius/4)) + 20)
-        
-        let donutChartViewCell = cell as! DonutChartViewCell
-        donutChartViewCell.chart.tintColor = RandomFlatColorWithShade(.light)
-        donutChartViewCell.chart.outlineThicknessPosition = OutlinePosition.all.random()
-        donutChartViewCell.chart.radius = radius
-        donutChartViewCell.chart.thickness = Double(arc4random_uniform(UInt32(radius/5))) + 3
-
-        donutChartViewCell.chart.fontFamily = fontName
-        donutChartViewCell.chart.fontSize = fontSize
-        donutChartViewCell.chart.percentageSignFontFamily = fontName
-        donutChartViewCell.chart.percentageSignFontSize = fontSize - 5
-
-        
-
-        return cell
     }
 
     override func didReceiveMemoryWarning() {
