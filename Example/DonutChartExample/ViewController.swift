@@ -56,27 +56,20 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
        
         let fontName = fontNameArray.random()
         let radius = Double(arc4random_uniform(30)) + 25
-        let fontSize = CGFloat(arc4random_uniform(UInt32(radius/2)) + 5)
+        let fontSize = CGFloat(arc4random_uniform(UInt32(radius/4)) + 20)
         
         let donutChartViewCell = cell as! DonutChartViewCell
         donutChartViewCell.chart.tintColor = RandomFlatColorWithShade(.light)
         donutChartViewCell.chart.outlineThicknessPosition = OutlinePosition.all.random()
         donutChartViewCell.chart.radius = radius
         donutChartViewCell.chart.thickness = Double(arc4random_uniform(UInt32(radius/5))) + 3
-        donutChartViewCell.chart.progress = Double(arc4random_uniform(8)) / 10.0 + 0.2
-    
+
         donutChartViewCell.chart.fontFamily = fontName
         donutChartViewCell.chart.fontSize = fontSize
         donutChartViewCell.chart.percentageSignFontFamily = fontName
         donutChartViewCell.chart.percentageSignFontSize = fontSize - 5
 
-        let animation = CABasicAnimation(keyPath: "progress")
-        animation.toValue = 1.0
-        animation.duration = 2.0
-        animation.fillMode = kCAFillModeForwards
         
-        
-        donutChartViewCell.chart.layer.add(animation, forKey: "progress")
 
         return cell
     }

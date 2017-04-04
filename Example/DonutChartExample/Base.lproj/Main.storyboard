@@ -51,7 +51,7 @@
                                                             <real key="value" value="60"/>
                                                         </userDefinedRuntimeAttribute>
                                                         <userDefinedRuntimeAttribute type="number" keyPath="thickness">
-                                                            <real key="value" value="10"/>
+                                                            <real key="value" value="11"/>
                                                         </userDefinedRuntimeAttribute>
                                                         <userDefinedRuntimeAttribute type="number" keyPath="outlineWidth">
                                                             <real key="value" value="1"/>
@@ -60,7 +60,7 @@
                                                             <real key="value" value="0.20000000000000001"/>
                                                         </userDefinedRuntimeAttribute>
                                                         <userDefinedRuntimeAttribute type="number" keyPath="fontSize">
-                                                            <real key="value" value="20"/>
+                                                            <real key="value" value="27"/>
                                                         </userDefinedRuntimeAttribute>
                                                         <userDefinedRuntimeAttribute type="string" keyPath="fontFamily" value="Arial"/>
                                                         <userDefinedRuntimeAttribute type="number" keyPath="percentageSignFontSize">

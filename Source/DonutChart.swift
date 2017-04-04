@@ -87,10 +87,17 @@ class DonutChart: UIView {
         }
 
     }
-
+    private var _progress :Double = 0.2
     @IBInspectable
-    var progress: Double = 0.0 {
-        didSet {
+    var progress: Double{
+        
+        get{
+            return _progress
+        }
+        set
+        {
+            _progress = min(max(newValue, 0),1.0)
+            layerProgress = _progress
             updateProgress()
             setDisplayIsDirty()
         }
@@ -230,11 +237,13 @@ class DonutChart: UIView {
 
         var textFrame: CGRect
 
-        let textFieldWidth = radius - thickness * outlineThicknessPosition.rawValue
+        let offset = thickness * outlineThicknessPosition.rawValue
+        let textFieldWidth = radius - offset
 
-        textFrame = CGRect(x: Double(self.frame.width) / 2 - radius + textFieldWidth / 2, y: Double(self.frame.height) / 2 - radius + textFieldWidth / 2,
-                width: textFieldWidth,
-                height: textFieldWidth)
+        textFrame = CGRect(x: Double(self.frame.width) / 2 - radius + textFieldWidth / 2 + offset/2,
+                           y: Double(self.frame.height) / 2 - radius + textFieldWidth / 2 + offset/2,
+                           width: textFieldWidth+offset,
+                           height: textFieldWidth+offset)
 
         percentageText?.frame = textFrame
     }
