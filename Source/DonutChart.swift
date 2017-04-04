@@ -54,6 +54,7 @@ class DonutChart : UIView
             innerCircleLayer?.strokeColor = tintColor.cgColor
             outerCircleLayer?.strokeColor = tintColor.cgColor
             percentageText?.textColor     = tintColor
+            
             setDisplayIsDirty()
         }
     }
@@ -102,7 +103,6 @@ class DonutChart : UIView
     {
         didSet
         {
-            layerProgress = progress
             setDisplayIsDirty()
         }
     }
@@ -110,8 +110,6 @@ class DonutChart : UIView
     @IBInspectable var fontSize: CGFloat = 12
         {
         didSet{
-            setFontValues()
-            updateText()
             setDisplayIsDirty()
         }
     }
@@ -119,8 +117,6 @@ class DonutChart : UIView
     @IBInspectable var fontFamily: String = "Arial"
         {
         didSet{
-            setFontValues()
-            updateText()
             setDisplayIsDirty()
         }
     }
@@ -128,8 +124,6 @@ class DonutChart : UIView
     @IBInspectable var percentageSignFontSize: CGFloat = 16
         {
         didSet{
-            setFontValues()
-            updateText()
             setDisplayIsDirty()
         }
     }
@@ -137,8 +131,6 @@ class DonutChart : UIView
     @IBInspectable var percentageSignFontFamily: String = "Arial"
         {
         didSet{
-            setFontValues()
-            updateText()
             setDisplayIsDirty()
         }
     }
@@ -176,33 +168,36 @@ class DonutChart : UIView
         create()
         (self.layer as! AnimationLayer).animationCallBack = setDisplayIsDirty
     }
-    
-    fileprivate func setFontValues()
-    {
-        font = UIFont(name: fontFamily, size: fontSize )
-        percentageSignFont = UIFont(name: percentageSignFontFamily, size: percentageSignFontSize )
-        
-        paragraphStyle = NSMutableParagraphStyle()
-        paragraphStyle?.lineHeightMultiple = 0.8
-        paragraphStyle?.alignment = NSTextAlignment.center
-    }
-    
+
     func create()
     {
         
         self.backgroundColor = UIColor.clear
         self.isOpaque = false
         
-        createLayers()
+        percentageText = UILabel( )
+        percentageText?.textAlignment = NSTextAlignment.center
+        percentageText?.numberOfLines = 0
+        percentageText?.lineBreakMode = NSLineBreakMode.byWordWrapping
         
+        paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle?.lineHeightMultiple = 0.8
+        paragraphStyle?.alignment = NSTextAlignment.center
+        createLayers()
+
         createOuterCircleLayer()
         createInnerCircleLayer()
         createTextField()
-        
         updateText( )
         addSubview( percentageText! )
         
-        
+    }
+    
+    
+    fileprivate func setFontValues()
+    {
+        font = UIFont(name: fontFamily, size: fontSize )
+        percentageSignFont = UIFont(name: percentageSignFontFamily, size: percentageSignFontSize )
     }
     
     fileprivate func createLayers()
@@ -218,28 +213,20 @@ class DonutChart : UIView
     {
         var textFrame :CGRect
         
-        let textFieldWidth = radius - ((outlineThicknessPosition == OutlinePosition.Inside) ? thickness/2 : 0)
+        let textFieldWidth = radius - thickness * outlineThicknessPosition.rawValue
         
-        if percentageSignFont != nil
-        {
-            textFrame = CGRect( x: textFieldWidth/2, y: textFieldWidth/2+5, width: textFieldWidth, height: textFieldWidth )
-            
-        }else{
-            
-            textFrame = CGRect( x: textFieldWidth/2, y: textFieldWidth/2, width: textFieldWidth, height: textFieldWidth)
-        }
+        textFrame = CGRect( x: Double(self.frame.width)/2 - radius + textFieldWidth/2,              y: Double(self.frame.height)/2 - radius + textFieldWidth/2,
+                                width: textFieldWidth,
+                                height: textFieldWidth )
         
-        percentageText = UILabel( frame: textFrame )
-        percentageText?.textAlignment = NSTextAlignment.center
-        percentageText?.numberOfLines = 0
-        percentageText?.lineBreakMode = NSLineBreakMode.byWordWrapping
-        percentageText?.textColor     = tintColor
+        percentageText?.frame =  textFrame
+
         
     }
 
     fileprivate func createOuterCircleLayer()
     {
-        var outlineCirclePositionOffset = thickness * outlineThicknessPosition.rawValue;
+        let outlineCirclePositionOffset = thickness * outlineThicknessPosition.rawValue;
         
         let rect  = CGRect( x: Double(self.frame.width)/2 - radius - outlineCirclePositionOffset/2,
                             y: Double(self.frame.height)/2 - radius - outlineCirclePositionOffset/2,
@@ -272,20 +259,25 @@ class DonutChart : UIView
     
     fileprivate func updateText()
     {
-        layerProgress = self.progress
-        
+        setFontValues()
+
         let percentage = Int( ( layerProgress * 100.0 ) )
+
         
-        if let percentageFont = percentageSignFont, let paragraphStyle = paragraphStyle
+        if let paragraphStyle = paragraphStyle
         {
+            
             var percentageString = "\(percentage)"
+
             attributedString = NSMutableAttributedString( string: percentageString+"\n%" )
-            attributedString.addAttribute( NSFontAttributeName, value: percentageFont, range: NSRange(location: 0, length: percentageString.utf8.count ) )
+            attributedString.addAttribute( NSFontAttributeName, value: font, range: NSRange(location: 0, length: percentageString.utf8.count ) )
             attributedString.addAttribute( NSFontAttributeName, value: percentageSignFont, range: NSRange(location: percentageString.utf8.count, length: 1))
             attributedString.addAttribute( NSParagraphStyleAttributeName, value: paragraphStyle, range: NSRange(location: 0, length: attributedString.string.utf8.count ) )
-            percentageText?.attributedText = attributedString!
+
+            self.percentageText?.attributedText = self.attributedString!
             
-        }else{
+        }
+        else{
             
             percentageText?.numberOfLines = 1
             percentageText?.font = font
@@ -293,8 +285,9 @@ class DonutChart : UIView
             percentageText?.textColor = tintColor
         }
         
+       
+        
     }
-    
     
     fileprivate func setDisplayIsDirty()
     {
@@ -314,7 +307,10 @@ class DonutChart : UIView
         if let innerCircleLayer = self.innerCircleLayer
         {
             innerCircleLayer.strokeEnd = CGFloat(layerProgress)
-            updateText()
+            
+            self.updateText()
+            
+            
         }
     }
     
