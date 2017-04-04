@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		386200F9AA89FAA8C4E305A2 /* Pods_DonutChartExample.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 032BC76E0A8F2D79DB4EB529 /* Pods_DonutChartExample.framework */; };
 		DA0612C71E8888940087D70E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0612C61E8888940087D70E /* AppDelegate.swift */; };
 		DA0612C91E8888940087D70E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0612C81E8888940087D70E /* ViewController.swift */; };
 		DA0612CC1E8888940087D70E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DA0612CA1E8888940087D70E /* Main.storyboard */; };
@@ -14,9 +15,13 @@
 		DA0612D11E8888940087D70E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DA0612CF1E8888940087D70E /* LaunchScreen.storyboard */; };
 		DA0612E11E889DAE0087D70E /* AnimationLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0612E01E889DAE0087D70E /* AnimationLayer.swift */; };
 		DA0612E31E889DB10087D70E /* DonutChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0612E21E889DB10087D70E /* DonutChart.swift */; };
+		DAEC9EEF1E93F7F300A1832E /* DonutChartViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAEC9EEE1E93F7F300A1832E /* DonutChartViewCell.swift */; };
+		F3DA34EF6C3B09065675E988 /* ArrayExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3DA3943F65C582AE79B43D3 /* ArrayExtensions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		032BC76E0A8F2D79DB4EB529 /* Pods_DonutChartExample.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DonutChartExample.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		D6445504F0834861775A34A0 /* Pods-DonutChartExample.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DonutChartExample.debug.xcconfig"; path = "Pods/Target Support Files/Pods-DonutChartExample/Pods-DonutChartExample.debug.xcconfig"; sourceTree = "<group>"; };
 		DA0612C31E8888940087D70E /* DonutChartExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DonutChartExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA0612C61E8888940087D70E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DA0612C81E8888940087D70E /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -26,6 +31,9 @@
 		DA0612D21E8888940087D70E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DA0612E01E889DAE0087D70E /* AnimationLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AnimationLayer.swift; path = ../../Source/AnimationLayer.swift; sourceTree = "<group>"; };
 		DA0612E21E889DB10087D70E /* DonutChart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DonutChart.swift; path = ../../Source/DonutChart.swift; sourceTree = "<group>"; };
+		DAEC9EEE1E93F7F300A1832E /* DonutChartViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DonutChartViewCell.swift; sourceTree = "<group>"; };
+		E33F980958BF40050499379D /* Pods-DonutChartExample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DonutChartExample.release.xcconfig"; path = "Pods/Target Support Files/Pods-DonutChartExample/Pods-DonutChartExample.release.xcconfig"; sourceTree = "<group>"; };
+		F3DA3943F65C582AE79B43D3 /* ArrayExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArrayExtensions.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -33,17 +41,37 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				386200F9AA89FAA8C4E305A2 /* Pods_DonutChartExample.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		7ECB9F6208AEDBFB02CBB4F0 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				032BC76E0A8F2D79DB4EB529 /* Pods_DonutChartExample.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		985AFCC55A484A43491B0C01 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				D6445504F0834861775A34A0 /* Pods-DonutChartExample.debug.xcconfig */,
+				E33F980958BF40050499379D /* Pods-DonutChartExample.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		DA0612BA1E8888940087D70E = {
 			isa = PBXGroup;
 			children = (
 				DA0612C51E8888940087D70E /* DonutChartExample */,
 				DA0612C41E8888940087D70E /* Products */,
+				985AFCC55A484A43491B0C01 /* Pods */,
+				7ECB9F6208AEDBFB02CBB4F0 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -66,6 +94,8 @@
 				DA0612CD1E8888940087D70E /* Assets.xcassets */,
 				DA0612CF1E8888940087D70E /* LaunchScreen.storyboard */,
 				DA0612D21E8888940087D70E /* Info.plist */,
+				DAEC9EEE1E93F7F300A1832E /* DonutChartViewCell.swift */,
+				F3DA3943F65C582AE79B43D3 /* ArrayExtensions.swift */,
 			);
 			path = DonutChartExample;
 			sourceTree = "<group>";
@@ -77,9 +107,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = DA0612D51E8888940087D70E /* Build configuration list for PBXNativeTarget "DonutChartExample" */;
 			buildPhases = (
+				F34F5ADB9931AFEE5787881A /* [CP] Check Pods Manifest.lock */,
 				DA0612BF1E8888940087D70E /* Sources */,
 				DA0612C01E8888940087D70E /* Frameworks */,
 				DA0612C11E8888940087D70E /* Resources */,
+				93E4475FE760E867E6A3FF48 /* [CP] Embed Pods Frameworks */,
+				B83CFFB8D25A666EFE570D07 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -103,6 +136,7 @@
 					DA0612C21E8888940087D70E = {
 						CreatedOnToolsVersion = 8.2.1;
 						DevelopmentTeam = BMT5RGU2V2;
+						LastSwiftMigration = 0830;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -138,6 +172,54 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		93E4475FE760E867E6A3FF48 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-DonutChartExample/Pods-DonutChartExample-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		B83CFFB8D25A666EFE570D07 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-DonutChartExample/Pods-DonutChartExample-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		F34F5ADB9931AFEE5787881A /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		DA0612BF1E8888940087D70E /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -146,7 +228,9 @@
 				DA0612C91E8888940087D70E /* ViewController.swift in Sources */,
 				DA0612C71E8888940087D70E /* AppDelegate.swift in Sources */,
 				DA0612E11E889DAE0087D70E /* AnimationLayer.swift in Sources */,
+				DAEC9EEF1E93F7F300A1832E /* DonutChartViewCell.swift in Sources */,
 				DA0612E31E889DB10087D70E /* DonutChart.swift in Sources */,
+				F3DA34EF6C3B09065675E988 /* ArrayExtensions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -265,6 +349,7 @@
 		};
 		DA0612D61E8888940087D70E /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = D6445504F0834861775A34A0 /* Pods-DonutChartExample.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = BMT5RGU2V2;
@@ -278,6 +363,7 @@
 		};
 		DA0612D71E8888940087D70E /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = E33F980958BF40050499379D /* Pods-DonutChartExample.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = BMT5RGU2V2;

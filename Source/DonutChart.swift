@@ -25,8 +25,10 @@
 import Foundation
 import UIKit
 
-enum OutlinePosition : Double
-{
+enum OutlinePosition: Double {
+
+    static var all:[OutlinePosition] = [.Inside,.Center,.Outside]
+
     case Inside = -1.0
     case Center = 0.0
     case Outside = 1.0
@@ -34,291 +36,263 @@ enum OutlinePosition : Double
 
 
 @IBDesignable
-class DonutChart : UIView
-{
-    fileprivate var outerCircleLayer : CAShapeLayer?
-    fileprivate var innerCircleLayer : CAShapeLayer?
-    fileprivate var percentageText : UILabel?
-    fileprivate var paragraphStyle : NSMutableParagraphStyle?
-    fileprivate var attributedString : NSMutableAttributedString!
+class DonutChart: UIView {
+
+    fileprivate var outerCircleLayer: CAShapeLayer?
+    fileprivate var innerCircleLayer: CAShapeLayer?
+    fileprivate var percentageText: UILabel?
+    fileprivate var paragraphStyle: NSMutableParagraphStyle?
+    fileprivate var attributedString: NSMutableAttributedString!
 
     override class var layerClass: AnyClass {
         return AnimationLayer.self
     }
-    
+
     @IBInspectable
-    override var tintColor     : UIColor!
-        {
-        didSet{
-            
+    override var tintColor: UIColor! {
+        didSet {
+
             innerCircleLayer?.strokeColor = tintColor.cgColor
             outerCircleLayer?.strokeColor = tintColor.cgColor
-            percentageText?.textColor     = tintColor
-            
+            percentageText?.textColor = tintColor
             setDisplayIsDirty()
         }
     }
-    
+
     @IBInspectable
-    var radius : Double = 100
-    {
-        didSet{
-            createOuterCircleLayer()
-            createInnerCircleLayer()
-            createTextField()
+    var radius: Double = 100 {
+        didSet {
+            setFrameOfOuterCircleLayer()
+            setFrameOfInnerCircleLayer()
+            setFrameOfTextField()
             setDisplayIsDirty()
         }
     }
-    
+
     @IBInspectable
-    var thickness : Double = 10
-    {
-        didSet{
-            createOuterCircleLayer()
-            createInnerCircleLayer()
-            createTextField()
+    var thickness: Double = 10 {
+        didSet {
+            setFrameOfOuterCircleLayer()
+            setFrameOfInnerCircleLayer()
+            setFrameOfTextField()
             setDisplayIsDirty()
         }
     }
-    
+
     @IBInspectable
-    var outlineWidth : Double = 1
-    {
-        didSet{
-            
+    var outlineWidth: Double = 1 {
+        didSet {
             self.outerCircleLayer?.lineWidth = CGFloat(outlineWidth)
             setDisplayIsDirty()
         }
-    }
-    
-    var outlineThicknessPosition : OutlinePosition = .Center
-    {
-        didSet {
-            setDisplayIsDirty()
-        }
-    }
-    
-    @IBInspectable
-    var progress : Double = 0.0
-    {
-        didSet
-        {
-            setDisplayIsDirty()
-        }
-    }
-    
-    @IBInspectable var fontSize: CGFloat = 12
-        {
-        didSet{
-            setDisplayIsDirty()
-        }
-    }
-    
-    @IBInspectable var fontFamily: String = "Arial"
-        {
-        didSet{
-            setDisplayIsDirty()
-        }
-    }
-    
-    @IBInspectable var percentageSignFontSize: CGFloat = 16
-        {
-        didSet{
-            setDisplayIsDirty()
-        }
-    }
-    
-    @IBInspectable var percentageSignFontFamily: String = "Arial"
-        {
-        didSet{
-            setDisplayIsDirty()
-        }
-    }
-    
-    var font : UIFont!
-    var percentageSignFont : UIFont!
-    
-    fileprivate var layerProgress:Double
-    {
-        set
-        {
-            (self.layer as! AnimationLayer).progress = newValue;
-        }
-        get
-        {
-            return (self.layer as! AnimationLayer).progress
-        }
-        
-    }
-    
-    override init( frame: CGRect)
-    {
-        super.init( frame: frame )
-        
-        setFontValues()
-        create()
-        (self.layer as! AnimationLayer).animationCallBack = setDisplayIsDirty
-    }
-    
-    required init?( coder aDecoder: NSCoder )
-    {
-        super.init( coder: aDecoder )
-        
-        setFontValues()
-        create()
-        (self.layer as! AnimationLayer).animationCallBack = setDisplayIsDirty
+
     }
 
-    func create()
-    {
-        
+    @IBInspectable
+    var progress: Double = 0.0 {
+        didSet {
+            updateProgress()
+            setDisplayIsDirty()
+        }
+    }
+
+    @IBInspectable var fontSize: CGFloat = 12 {
+        didSet {
+            createFonts()
+            updateText()
+            setDisplayIsDirty()
+        }
+    }
+
+    @IBInspectable var fontFamily: String = "Arial" {
+        didSet {
+            createFonts()
+            updateText()
+            setDisplayIsDirty()
+        }
+    }
+
+    @IBInspectable var percentageSignFontSize: CGFloat = 16 {
+        didSet {
+            createFonts()
+            updateText()
+            setDisplayIsDirty()
+        }
+    }
+
+    @IBInspectable var percentageSignFontFamily: String = "Arial" {
+        didSet {
+            createFonts()
+            updateText()
+            setDisplayIsDirty()
+        }
+    }
+
+    var outlineThicknessPosition: OutlinePosition = .Center {
+        didSet {
+
+            setDisplayIsDirty()
+        }
+    }
+
+    private var font: UIFont!
+    private var percentageSignFont: UIFont!
+
+    fileprivate var layerProgress: Double {
+
+        set {
+            (self.layer as! AnimationLayer).progress = newValue;
+        }
+        get {
+            return (self.layer as! AnimationLayer).progress
+        }
+
+    }
+
+    override init(frame: CGRect) {
+
+        super.init(frame: frame)
+
+        create()
+        (self.layer as! AnimationLayer).animationCallBack = animationCallback
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+
+        super.init(coder: aDecoder)
+
+        create()
+        (self.layer as! AnimationLayer).animationCallBack = animationCallback
+    }
+
+    func create() {
+
         self.backgroundColor = UIColor.clear
         self.isOpaque = false
-        
-        percentageText = UILabel( )
+
+
+        createTextField()
+        createParagraphStyle()
+        createLayers()
+
+        setFrameOfOuterCircleLayer()
+        setFrameOfInnerCircleLayer()
+        setFrameOfTextField()
+        createFonts()
+        updateText()
+        addSubview(percentageText!)
+
+    }
+
+    private func createTextField() {
+
+        percentageText = UILabel()
         percentageText?.textAlignment = NSTextAlignment.center
         percentageText?.numberOfLines = 0
         percentageText?.lineBreakMode = NSLineBreakMode.byWordWrapping
-        
+
+    }
+
+    fileprivate func createParagraphStyle() {
+
         paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle?.lineHeightMultiple = 0.8
         paragraphStyle?.alignment = NSTextAlignment.center
-        createLayers()
 
-        createOuterCircleLayer()
-        createInnerCircleLayer()
-        createTextField()
-        updateText( )
-        addSubview( percentageText! )
-        
     }
-    
-    
-    fileprivate func setFontValues()
-    {
-        font = UIFont(name: fontFamily, size: fontSize )
-        percentageSignFont = UIFont(name: percentageSignFontFamily, size: percentageSignFontSize )
+
+
+    fileprivate func createFonts() {
+
+        font = UIFont(name: fontFamily, size: fontSize)
+        percentageSignFont = UIFont(name: percentageSignFontFamily, size: percentageSignFontSize)
+
     }
-    
-    fileprivate func createLayers()
-    {
+
+    fileprivate func createLayers() {
+
         outerCircleLayer = CAShapeLayer()
-        innerCircleLayer =  CAShapeLayer()
-        
-        self.layer.addSublayer( outerCircleLayer! )
-        self.layer.addSublayer( innerCircleLayer! )
-    }
-    
-    fileprivate func createTextField()
-    {
-        var textFrame :CGRect
-        
-        let textFieldWidth = radius - thickness * outlineThicknessPosition.rawValue
-        
-        textFrame = CGRect( x: Double(self.frame.width)/2 - radius + textFieldWidth/2,              y: Double(self.frame.height)/2 - radius + textFieldWidth/2,
-                                width: textFieldWidth,
-                                height: textFieldWidth )
-        
-        percentageText?.frame =  textFrame
+        innerCircleLayer = CAShapeLayer()
 
-        
-    }
+        self.layer.addSublayer(outerCircleLayer!)
+        self.layer.addSublayer(innerCircleLayer!)
 
-    fileprivate func createOuterCircleLayer()
-    {
-        let outlineCirclePositionOffset = thickness * outlineThicknessPosition.rawValue;
-        
-        let rect  = CGRect( x: Double(self.frame.width)/2 - radius - outlineCirclePositionOffset/2,
-                            y: Double(self.frame.height)/2 - radius - outlineCirclePositionOffset/2,
-                            width: radius * 2 + outlineCirclePositionOffset,
-                            height: radius * 2 + outlineCirclePositionOffset)
-        
-        outerCircleLayer?.path = UIBezierPath( roundedRect: rect, cornerRadius: CGFloat(radius) ).cgPath
         outerCircleLayer?.lineWidth = CGFloat(outlineWidth)
         outerCircleLayer?.strokeColor = tintColor.cgColor
         outerCircleLayer?.fillColor = UIColor.clear.cgColor
-        
-    }
-    
-    fileprivate  func createInnerCircleLayer()
-    {
 
-        let rect = CGRect( x: Double(self.frame.width)/2 - radius ,
-                           y: Double(self.frame.height)/2 - radius,
-                           width: ( radius   ) * 2,
-                           height: ( radius  ) * 2 )
-        
-        innerCircleLayer?.path = UIBezierPath( roundedRect: rect, cornerRadius: CGFloat(radius * 2) ).cgPath
         innerCircleLayer?.lineWidth = CGFloat(thickness)
-        innerCircleLayer?.strokeColor = tintColor.cgColor
         innerCircleLayer?.fillColor = UIColor.clear.cgColor
-        innerCircleLayer?.strokeEnd = CGFloat(layerProgress)
-        
-        
+
     }
-    
-    fileprivate func updateText()
-    {
-        setFontValues()
 
-        let percentage = Int( ( layerProgress * 100.0 ) )
+    fileprivate func setFrameOfTextField() {
 
-        
-        if let paragraphStyle = paragraphStyle
-        {
-            
-            var percentageString = "\(percentage)"
+        var textFrame: CGRect
 
-            attributedString = NSMutableAttributedString( string: percentageString+"\n%" )
-            attributedString.addAttribute( NSFontAttributeName, value: font, range: NSRange(location: 0, length: percentageString.utf8.count ) )
-            attributedString.addAttribute( NSFontAttributeName, value: percentageSignFont, range: NSRange(location: percentageString.utf8.count, length: 1))
-            attributedString.addAttribute( NSParagraphStyleAttributeName, value: paragraphStyle, range: NSRange(location: 0, length: attributedString.string.utf8.count ) )
+        let textFieldWidth = radius - thickness * outlineThicknessPosition.rawValue
 
-            self.percentageText?.attributedText = self.attributedString!
-            
-        }
-        else{
-            
-            percentageText?.numberOfLines = 1
-            percentageText?.font = font
-            percentageText?.text = "\(percentage)"
-            percentageText?.textColor = tintColor
-        }
-        
-       
-        
+        textFrame = CGRect(x: Double(self.frame.width) / 2 - radius + textFieldWidth / 2, y: Double(self.frame.height) / 2 - radius + textFieldWidth / 2,
+                width: textFieldWidth,
+                height: textFieldWidth)
+
+        percentageText?.frame = textFrame
     }
-    
-    fileprivate func setDisplayIsDirty()
-    {
+
+    fileprivate func setFrameOfOuterCircleLayer() {
+
+        let outlineCirclePositionOffset = thickness * outlineThicknessPosition.rawValue;
+
+        let rect = CGRect(x: Double(self.frame.width) / 2 - radius - outlineCirclePositionOffset / 2,
+                y: Double(self.frame.height) / 2 - radius - outlineCirclePositionOffset / 2,
+                width: radius * 2 + outlineCirclePositionOffset,
+                height: radius * 2 + outlineCirclePositionOffset)
+
+        outerCircleLayer?.path = UIBezierPath(roundedRect: rect, cornerRadius: CGFloat(radius)).cgPath
+
+    }
+
+    fileprivate func setFrameOfInnerCircleLayer() {
+
+        let rect = CGRect(x: Double(self.frame.width) / 2 - radius,
+                y: Double(self.frame.height) / 2 - radius,
+                width: (radius) * 2,
+                height: (radius) * 2)
+
+        innerCircleLayer?.path = UIBezierPath(roundedRect: rect, cornerRadius: CGFloat(radius * 2)).cgPath
+        innerCircleLayer?.strokeColor = tintColor.cgColor
+
+    }
+
+    fileprivate func updateText() {
+
+        let percentage = Int((layerProgress * 100.0))
+        var percentageString = "\(percentage)"
+
+        attributedString = NSMutableAttributedString(string: percentageString + "\n%")
+        attributedString.addAttribute(NSFontAttributeName, value: font, range: NSRange(location: 0, length: percentageString.utf8.count))
+        attributedString.addAttribute(NSFontAttributeName, value: percentageSignFont, range: NSRange(location: percentageString.utf8.count+1, length: 1))
+        attributedString.addAttribute(NSParagraphStyleAttributeName, value: paragraphStyle!, range: NSRange(location: 0, length: attributedString.string.utf8.count))
+        self.percentageText?.attributedText = self.attributedString ?? NSAttributedString(string: "")
+
+    }
+
+    fileprivate func setDisplayIsDirty() {
+
         self.setNeedsDisplay()
+
+    }
+
+    fileprivate func updateProgress() {
+
+        innerCircleLayer?.strokeEnd = CGFloat(layerProgress)
+        updateText()
     }
     
-    override func setNeedsDisplay()
+    fileprivate func animationCallback()
     {
-        updateDrawing()
+        updateProgress()
+        setDisplayIsDirty()
     }
-    
-    fileprivate func updateDrawing()
-    {
-        
-        layerProgress = self.progress
-        
-        if let innerCircleLayer = self.innerCircleLayer
-        {
-            innerCircleLayer.strokeEnd = CGFloat(layerProgress)
-            
-            self.updateText()
-            
-            
-        }
-    }
-    
 }
 
-public enum DonutChartAnimatableProperties : String
-{
-    case progress = "progress"
-    case radius = "radius"
-    case thickness = "thickness"
-}

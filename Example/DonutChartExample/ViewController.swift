@@ -24,48 +24,59 @@ SOFTWARE.
 
 import UIKit
 import Darwin
+import ChameleonFramework
 
 class ViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
 
     @IBOutlet weak var collectionView: UICollectionView!
+    
+    let fontNameArray : [String] = ["Arial", "AmericanTypewriter", "AppleSDGothicNeo-Bold","Arial-BoldItalicMT","Avenir-Black","AvenirNext-Medium","DINAlternate-Bold"]
+    
     fileprivate let itemCount = 20;
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        let color = UIColor.flatBlack
+        collectionView.backgroundColor = color
+        self.view.backgroundColor = color
         collectionView.reloadData()
     }
 
-    public func numberOfSections(in collectionView: UICollectionView) -> Int {
+    open func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }
 
-    public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    open func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return itemCount;
     }
 
-    public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    open func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
 
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "donutChartCell", for: indexPath)
-
-        let cellBounds = cell.contentView.bounds;
+       
+        let fontName = fontNameArray.random()
+        let radius = Double(arc4random_uniform(30)) + 25
+        let fontSize = CGFloat(arc4random_uniform(UInt32(radius/2)) + 5)
         
-        let chart = DonutChart(frame:CGRect(x: 0, y: 0, width: cellBounds.width, height: cellBounds.height))
-        chart.tintColor            = UIColor.red
-        chart.maxInnerRadius       = 10
-        chart.minInnerRadius       = 5
-        chart.outerLineWidth       = 0.5
-        chart.progress             = 0.0
-        chart.font                 = UIFont(name: "Arial", size: 21)
-        chart.percentageSignFont   = UIFont(name: "Arial", size: 10)
-        chart.create()
+        let donutChartViewCell = cell as! DonutChartViewCell
+        donutChartViewCell.chart.tintColor = RandomFlatColorWithShade(.light)
+        donutChartViewCell.chart.outlineThicknessPosition = OutlinePosition.all.random()
+        donutChartViewCell.chart.radius = radius
+        donutChartViewCell.chart.thickness = Double(arc4random_uniform(UInt32(radius/5))) + 3
+        donutChartViewCell.chart.progress = Double(arc4random_uniform(8)) / 10.0 + 0.2
+    
+        donutChartViewCell.chart.fontFamily = fontName
+        donutChartViewCell.chart.fontSize = fontSize
+        donutChartViewCell.chart.percentageSignFontFamily = fontName
+        donutChartViewCell.chart.percentageSignFontSize = fontSize - 5
 
         let animation = CABasicAnimation(keyPath: "progress")
         animation.toValue = 1.0
         animation.duration = 2.0
-        animation.fillMode = kCAFillModeForwards;
-        chart.layer.add(animation, forKey: "progress")
-
-        cell.contentView.addSubview(chart)
+        animation.fillMode = kCAFillModeForwards
+        
+        
+        donutChartViewCell.chart.layer.add(animation, forKey: "progress")
 
         return cell
     }
