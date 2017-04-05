@@ -22,13 +22,9 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qMs-Zo-mr5" customClass="DonutChart" customModule="DonutChartExample" customModuleProvider="target">
-                                <rect key="frame" x="16" y="20" width="150" height="150"/>
+                                <rect key="frame" x="28" y="20" width="150" height="150"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="color" keyPath="tintColor">
-                                        <color key="value" red="0.76500725746154785" green="0.2578754723072052" blue="0.56774717569351196" alpha="1" colorSpace="calibratedRGB"/>
-                                    </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="number" keyPath="radius">
                                         <real key="value" value="45"/>
                                     </userDefinedRuntimeAttribute>
@@ -50,15 +46,102 @@
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="string" keyPath="percentageSignFontFamily" value="Avenir-Black"/>
                                     <userDefinedRuntimeAttribute type="string" keyPath="outlinePlacementInterfaceAdapter" value="inside"/>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="progressColor">
+                                        <color key="value" red="0.9212072491645813" green="0.84832113981246948" blue="0.62377804517745972" alpha="1" colorSpace="calibratedRGB"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="outlineColor">
+                                        <color key="value" red="0.79226005077362061" green="0.7181098461151123" blue="0.48854580521583557" alpha="1" colorSpace="calibratedRGB"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="textColor">
+                                        <color key="value" red="0.56465393304824829" green="0.45339596271514893" blue="0.35711643099784851" alpha="1" colorSpace="calibratedRGB"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </view>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wT0-yU-5ny" customClass="DonutChart" customModule="DonutChartExample" customModuleProvider="target">
+                                <rect key="frame" x="28" y="221" width="150" height="150"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="tintColor">
+                                        <color key="value" red="0.42655369639396667" green="0.47584608197212219" blue="0.48026475310325623" alpha="1" colorSpace="calibratedRGB"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="radius">
+                                        <real key="value" value="45"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="thickness">
+                                        <real key="value" value="10"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="outlineWidth">
+                                        <real key="value" value="0.0"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="progress">
+                                        <real key="value" value="0.59999999999999998"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="fontSize">
+                                        <real key="value" value="26"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="fontFamily" value="Avenir-Black"/>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="percentageSignFontSize">
+                                        <real key="value" value="13"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="percentageSignFontFamily" value="Avenir-Black"/>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="outlinePlacementInterfaceAdapter" value="center"/>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="progressColor">
+                                        <color key="value" red="0.90823972225189209" green="0.92638683319091797" blue="0.9317171573638916" alpha="1" colorSpace="calibratedRGB"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="outlineColor">
+                                        <color key="value" red="1" green="0.31425054250000001" blue="0.45430441240000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="textColor">
+                                        <color key="value" red="0.91498154401779175" green="0.37833490967750549" blue="0.73496383428573608" alpha="1" colorSpace="calibratedRGB"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </view>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pWb-hh-jTI" customClass="DonutChart" customModule="DonutChartExample" customModuleProvider="target">
+                                <rect key="frame" x="28" y="426" width="150" height="150"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="tintColor">
+                                        <color key="value" red="0.42655369640000002" green="0.475846082" blue="0.4802647531" alpha="1" colorSpace="calibratedRGB"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="radius">
+                                        <real key="value" value="40"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="thickness">
+                                        <real key="value" value="10"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="outlineWidth">
+                                        <real key="value" value="1"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="progress">
+                                        <real key="value" value="0.51000000000000001"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="fontSize">
+                                        <real key="value" value="35"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="fontFamily" value="HelveticaNeue-Thin"/>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="percentageSignFontSize">
+                                        <real key="value" value="13"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="percentageSignFontFamily" value="Avenir-Black"/>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="outlinePlacementInterfaceAdapter" value="center"/>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="progressColor">
+                                        <color key="value" red="0.59489071369171143" green="0.74986636638641357" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="outlineColor">
+                                        <color key="value" red="0.1911550909280777" green="0.6378670334815979" blue="0.26147949695587158" alpha="1" colorSpace="calibratedRGB"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="textColor">
+                                        <color key="value" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="isPercentageSignVisible" value="NO"/>
                                 </userDefinedRuntimeAttributes>
                             </view>
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wV7-Pu-fD0" customClass="DonutChart" customModule="DonutChartExample" customModuleProvider="target">
-                                <rect key="frame" x="209" y="20" width="150" height="150"/>
+                                <rect key="frame" x="203" y="20" width="150" height="150"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="color" keyPath="tintColor">
-                                        <color key="value" red="0.49744248390197754" green="0.64893847703933716" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="value" red="0.18998533487319946" green="0.35768887400627136" blue="0.43821841478347778" alpha="1" colorSpace="calibratedRGB"/>
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="number" keyPath="radius">
                                         <real key="value" value="59"/>
@@ -79,14 +162,22 @@
                                     <userDefinedRuntimeAttribute type="number" keyPath="percentageSignFontSize">
                                         <real key="value" value="19"/>
                                     </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="string" keyPath="percentageSignFontFamily" value="BradleyHandITCTT-Bold"/>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="percentageSignFontFamily" value="GillSans-Light"/>
                                     <userDefinedRuntimeAttribute type="string" keyPath="outlinePlacementInterfaceAdapter" value="inside"/>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="progressColor">
+                                        <color key="value" red="0.78738981485366821" green="0.24644413590431213" blue="0.27221894264221191" alpha="1" colorSpace="calibratedRGB"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="outlineColor">
+                                        <color key="value" red="0.78738981485366821" green="0.24644413590431213" blue="0.27221894264221191" alpha="1" colorSpace="calibratedRGB"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="textColor">
+                                        <color key="value" red="0.78738981485366821" green="0.24644413590431213" blue="0.27221894264221191" alpha="1" colorSpace="calibratedRGB"/>
+                                    </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </view>
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6na-Md-h2J" customClass="DonutChart" customModule="DonutChartExample" customModuleProvider="target">
-                                <rect key="frame" x="209" y="190" width="150" height="150"/>
+                                <rect key="frame" x="203" y="221" width="150" height="150"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="color" keyPath="tintColor">
                                         <color key="value" red="0.25005361437797546" green="0.30566063523292542" blue="0.58369332551956177" alpha="1" colorSpace="calibratedRGB"/>
@@ -112,42 +203,64 @@
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="string" keyPath="percentageSignFontFamily" value="DamascusBold"/>
                                     <userDefinedRuntimeAttribute type="string" keyPath="outlinePlacementInterfaceAdapter" value="outside"/>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="isPercentageSignVisible" value="NO"/>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="progressColor">
+                                        <color key="value" red="0.97670525312423706" green="0.60546392202377319" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="outlineColor">
+                                        <color key="value" red="0.98624199628829956" green="0.7796865701675415" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="textColor">
+                                        <color key="value" red="0.98624199628829956" green="0.7796865701675415" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                    </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </view>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wT0-yU-5ny" customClass="DonutChart" customModule="DonutChartExample" customModuleProvider="target">
-                                <rect key="frame" x="16" y="190" width="150" height="150"/>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6N3-LV-kJy" customClass="DonutChart" customModule="DonutChartExample" customModuleProvider="target">
+                                <rect key="frame" x="203" y="426" width="150" height="150"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="color" keyPath="tintColor">
-                                        <color key="value" red="0.42655369639396667" green="0.47584608197212219" blue="0.48026475310325623" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="value" red="0.42655369640000002" green="0.475846082" blue="0.4802647531" alpha="1" colorSpace="calibratedRGB"/>
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="number" keyPath="radius">
-                                        <real key="value" value="45"/>
+                                        <real key="value" value="64"/>
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="number" keyPath="thickness">
-                                        <real key="value" value="10"/>
+                                        <real key="value" value="1"/>
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="number" keyPath="outlineWidth">
-                                        <real key="value" value="0.0"/>
+                                        <real key="value" value="1"/>
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="number" keyPath="progress">
-                                        <real key="value" value="0.59999999999999998"/>
+                                        <real key="value" value="0.10000000000000001"/>
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="number" keyPath="fontSize">
-                                        <real key="value" value="21"/>
+                                        <real key="value" value="38"/>
                                     </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="string" keyPath="fontFamily" value="Avenir-Black"/>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="fontFamily" value="HelveticaNeue-Thin"/>
                                     <userDefinedRuntimeAttribute type="number" keyPath="percentageSignFontSize">
                                         <real key="value" value="13"/>
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="string" keyPath="percentageSignFontFamily" value="Avenir-Black"/>
                                     <userDefinedRuntimeAttribute type="string" keyPath="outlinePlacementInterfaceAdapter" value="center"/>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="progressColor">
+                                        <color key="value" red="0.90823972230000005" green="0.92638683320000004" blue="0.93171715740000005" alpha="1" colorSpace="calibratedRGB"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="outlineColor">
+                                        <color key="value" red="1" green="0.31425054250000001" blue="0.45430441240000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="textColor">
+                                        <color key="value" red="0.90823972225189209" green="0.92638683319091797" blue="0.9317171573638916" alpha="1" colorSpace="calibratedRGB"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="isPercentageSignVisible" value="NO"/>
                                 </userDefinedRuntimeAttributes>
                             </view>
                         </subviews>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" red="0.15868747234344482" green="0.21822044253349304" blue="0.30320093035697937" alpha="1" colorSpace="calibratedRGB"/>
                     </view>
+                    <connections>
+                        <outlet property="animatedChart" destination="6N3-LV-kJy" id="xQw-fz-WaB"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>

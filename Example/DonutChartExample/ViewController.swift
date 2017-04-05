@@ -24,14 +24,30 @@ SOFTWARE.
 
 import UIKit
 import Darwin
-import ChameleonFramework
 
 class ViewController: UIViewController{
 
+    @IBOutlet weak var animatedChart: DonutChart!
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        let color = UIColor.white
-        self.view.backgroundColor = color
+        animate(aChart:animatedChart)
+    }
+    
+    func animate(aChart chart : DonutChart)
+    {
+        let animation = CABasicAnimation(keyPath: "progress")
+        animation.toValue = 1.0
+        animation.duration = 2
+        animation.repeatDuration = 2
+        animation.fillMode = kCAFillModeForwards
+        animation.beginTime = CACurrentMediaTime()+1
+        animation.repeatCount = .infinity
+        animation.autoreverses = true
+        animation.isRemovedOnCompletion = false
+        chart.layer.add(animation, forKey: "progress")
+
     }
 
     override func didReceiveMemoryWarning() {

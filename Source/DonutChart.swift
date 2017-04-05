@@ -43,21 +43,42 @@ class DonutChart: UIView {
     fileprivate var percentageText: UILabel?
     fileprivate var paragraphStyle: NSMutableParagraphStyle?
     fileprivate var attributedString: NSMutableAttributedString!
-
+    fileprivate var _outlinePlacementInterfaceAdapter: String = "inside"
+    
     override class var layerClass: AnyClass {
         return AnimationLayer.self
     }
 
     @IBInspectable
-    override var tintColor: UIColor! {
+    var progressColor: UIColor = UIColor.black
+    {
         didSet {
 
-            progressLayer?.strokeColor = tintColor.cgColor
-            outlineLayer?.strokeColor = tintColor.cgColor
-            percentageText?.textColor = tintColor
+            progressLayer?.strokeColor = progressColor.cgColor
             setDisplayIsDirty()
         }
     }
+
+    @IBInspectable
+    var outlineColor: UIColor = UIColor.black
+    {
+        didSet {
+
+            outlineLayer?.strokeColor = outlineColor.cgColor
+            setDisplayIsDirty()
+        }
+    }
+
+    @IBInspectable
+    var textColor: UIColor = UIColor.black
+    {
+        didSet {
+
+            percentageText?.textColor = textColor
+            setDisplayIsDirty()
+        }
+    }
+    
 
     @IBInspectable
     var radius: Double = 100 {
@@ -137,7 +158,12 @@ class DonutChart: UIView {
         }
     }
     
-    private var _outlinePlacementInterfaceAdapter: String = "inside"
+    @IBInspectable var isPercentageSignVisible : Bool = true {
+        didSet{
+            updateText()
+            setDisplayIsDirty()
+        }
+    }
     
     @IBInspectable var outlinePlacementInterfaceAdapter: String
     {
@@ -224,7 +250,6 @@ class DonutChart: UIView {
 
         percentageText = UILabel()
         percentageText?.textAlignment = NSTextAlignment.center
-        percentageText?.numberOfLines = 0
         percentageText?.lineBreakMode = NSLineBreakMode.byWordWrapping
 
     }
@@ -254,7 +279,6 @@ class DonutChart: UIView {
         self.layer.addSublayer(progressLayer!)
 
         outlineLayer?.lineWidth = CGFloat(outlineWidth)
-        outlineLayer?.strokeColor = tintColor.cgColor
         outlineLayer?.fillColor = UIColor.clear.cgColor
 
         progressLayer?.lineWidth = CGFloat(thickness)
@@ -298,7 +322,6 @@ class DonutChart: UIView {
                 height: (radius) * 2)
 
         progressLayer?.path = UIBezierPath(roundedRect: rect, cornerRadius: CGFloat(radius * 2)).cgPath
-        progressLayer?.strokeColor = tintColor.cgColor
 
     }
 
@@ -307,11 +330,20 @@ class DonutChart: UIView {
         let percentage = Int(ceil(layerProgress * 100.0))
         var percentageString = "\(percentage)"
 
-        attributedString = NSMutableAttributedString(string: percentageString + "\n%")
-        attributedString.addAttribute(NSFontAttributeName, value: font, range: NSRange(location: 0, length: percentageString.utf8.count))
-        attributedString.addAttribute(NSFontAttributeName, value: percentageSignFont, range: NSRange(location: percentageString.utf8.count+1, length: 1))
-        attributedString.addAttribute(NSParagraphStyleAttributeName, value: paragraphStyle!, range: NSRange(location: 0, length: attributedString.string.utf8.count))
-        self.percentageText?.attributedText = self.attributedString ?? NSAttributedString(string: "")
+        if(isPercentageSignVisible){
+            percentageText?.numberOfLines = 0
+            attributedString = NSMutableAttributedString(string: percentageString + "\n%")
+            attributedString.addAttribute(NSFontAttributeName, value: font, range: NSRange(location: 0, length: percentageString.utf8.count))
+            attributedString.addAttribute(NSFontAttributeName, value: percentageSignFont, range: NSRange(location: percentageString.utf8.count+1, length: 1))
+            attributedString.addAttribute(NSParagraphStyleAttributeName, value: paragraphStyle!, range: NSRange(location: 0, length: attributedString.string.utf8.count))
+            self.percentageText?.attributedText = self.attributedString ?? NSAttributedString(string: "")
+        }else{
+            percentageText?.numberOfLines = 1
+            attributedString = NSMutableAttributedString(string: percentageString)
+            attributedString.addAttribute(NSFontAttributeName, value: font, range: NSRange(location: 0, length: percentageString.utf8.count))
+            attributedString.addAttribute(NSParagraphStyleAttributeName, value: paragraphStyle!, range: NSRange(location: 0, length: attributedString.string.utf8.count))
+            self.percentageText?.attributedText = self.attributedString
+        }
 
     }
 
