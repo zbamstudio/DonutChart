@@ -223,7 +223,7 @@
                                         <color key="value" red="0.42655369640000002" green="0.475846082" blue="0.4802647531" alpha="1" colorSpace="calibratedRGB"/>
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="number" keyPath="radius">
-                                        <real key="value" value="64"/>
+                                        <real key="value" value="53"/>
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="number" keyPath="thickness">
                                         <real key="value" value="1"/>
@@ -232,10 +232,10 @@
                                         <real key="value" value="1"/>
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="number" keyPath="progress">
-                                        <real key="value" value="0.10000000000000001"/>
+                                        <real key="value" value="0.5"/>
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="number" keyPath="fontSize">
-                                        <real key="value" value="38"/>
+                                        <real key="value" value="30"/>
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="string" keyPath="fontFamily" value="HelveticaNeue-Thin"/>
                                     <userDefinedRuntimeAttribute type="number" keyPath="percentageSignFontSize">
@@ -244,7 +244,7 @@
                                     <userDefinedRuntimeAttribute type="string" keyPath="percentageSignFontFamily" value="Avenir-Black"/>
                                     <userDefinedRuntimeAttribute type="string" keyPath="outlinePlacementInterfaceAdapter" value="center"/>
                                     <userDefinedRuntimeAttribute type="color" keyPath="progressColor">
-                                        <color key="value" red="0.90823972230000005" green="0.92638683320000004" blue="0.93171715740000005" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="value" red="0.90823972225189209" green="0.92638683319091797" blue="0.9317171573638916" alpha="1" colorSpace="calibratedRGB"/>
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="color" keyPath="outlineColor">
                                         <color key="value" red="1" green="0.31425054250000001" blue="0.45430441240000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -252,7 +252,7 @@
                                     <userDefinedRuntimeAttribute type="color" keyPath="textColor">
                                         <color key="value" red="0.90823972225189209" green="0.92638683319091797" blue="0.9317171573638916" alpha="1" colorSpace="calibratedRGB"/>
                                     </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="boolean" keyPath="isPercentageSignVisible" value="NO"/>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="isPercentageSignVisible" value="YES"/>
                                 </userDefinedRuntimeAttributes>
                             </view>
                         </subviews>
