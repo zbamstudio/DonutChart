@@ -26,7 +26,7 @@ class DonutChart: UIView {
     fileprivate var paragraphStyle: NSMutableParagraphStyle?
     fileprivate var attributedString: NSMutableAttributedString!
     fileprivate var _outlinePlacementInterfaceAdapter: String = "inside"
-    
+
     override class var layerClass: AnyClass {
         return AnimationLayer.self
     }
@@ -34,17 +34,15 @@ class DonutChart: UIView {
     fileprivate var _progress: CGFloat = 0.0
 
     @IBInspectable
-
-    var progress: CGFloat {
+    var progress: CGFloat
+    {
         set {
-
             if let layer = layer as? AnimationLayer {
                 layer.progress = newValue
             }
 
             _progress = newValue
             updateProgress()
-
         }
         get {
             return _progress
@@ -57,7 +55,6 @@ class DonutChart: UIView {
     var progressColor: UIColor
     {
         set {
-
             if let layer = layer as? AnimationLayer {
                 layer.progressColor = newValue.cgColor
             }
@@ -77,7 +74,6 @@ class DonutChart: UIView {
     var outlineColor: UIColor
     {
         set {
-
             if let layer = layer as? AnimationLayer {
                 layer.outlineColor = newValue.cgColor
             }
@@ -97,7 +93,6 @@ class DonutChart: UIView {
     var textColor: UIColor
     {
         set {
-
             if let layer = layer as? AnimationLayer {
                 layer.textColor = newValue.cgColor
             }
@@ -116,9 +111,7 @@ class DonutChart: UIView {
 
     @IBInspectable
     var radius: Double {
-
         set {
-
             if let layer = layer as? AnimationLayer {
                 layer.radius = CGFloat(newValue)
             }
@@ -135,12 +128,10 @@ class DonutChart: UIView {
     }
 
     fileprivate var _thickness : Double = 10
+
     @IBInspectable
     var thickness: Double{
-
-
         set {
-
             if let layer = layer as? AnimationLayer {
                 layer.thickness = CGFloat(newValue)
             }
@@ -160,10 +151,9 @@ class DonutChart: UIView {
     fileprivate var _outlineWidth : Double = 1
 
     @IBInspectable
-    var outlineWidth: Double {
-
+    var outlineWidth: Double
+    {
         set {
-
             if let layer = layer as? AnimationLayer {
                 layer.outlineWidth = CGFloat(newValue)
             }
@@ -178,45 +168,55 @@ class DonutChart: UIView {
 
     }
 
-    @IBInspectable var fontSize: CGFloat = 12 {
-        didSet {
+    @IBInspectable var fontSize: CGFloat = 12
+    {
+        didSet
+        {
             createFonts()
             updateText()
             self.setNeedsDisplay()
         }
     }
 
-    @IBInspectable var fontFamily: String = "Arial" {
-        didSet {
+    @IBInspectable var fontFamily: String = "Arial"
+    {
+        didSet
+        {
             createFonts()
             updateText()
             self.setNeedsDisplay()
         }
     }
 
-    @IBInspectable var percentageSignFontSize: CGFloat = 16 {
-        didSet {
+    @IBInspectable var percentageSignFontSize: CGFloat = 16
+    {
+        didSet
+        {
             createFonts()
             updateText()
             self.setNeedsDisplay()
         }
     }
 
-    @IBInspectable var percentageSignFontFamily: String = "Arial" {
-        didSet {
+    @IBInspectable var percentageSignFontFamily: String = "Arial"
+    {
+        didSet
+        {
             createFonts()
             updateText()
             self.setNeedsDisplay()
         }
     }
-    
-    @IBInspectable var isPercentageSignVisible : Bool = true {
-        didSet{
+
+    @IBInspectable var isPercentageSignVisible : Bool = true
+    {
+        didSet
+        {
             updateText()
             self.setNeedsDisplay()
         }
     }
-    
+
     @IBInspectable var outlinePlacementInterfaceAdapter: String
     {
         set
@@ -241,11 +241,11 @@ class DonutChart: UIView {
             return _outlinePlacementInterfaceAdapter
         }
     }
-    
-    
-    var outlinePlacement: OutlinePlacement = .Inside {
-        didSet {
 
+    var outlinePlacement: OutlinePlacement = .Inside
+    {
+        didSet
+        {
             self.setNeedsDisplay()
         }
     }
@@ -253,31 +253,28 @@ class DonutChart: UIView {
     private var font: UIFont!
     private var percentageSignFont: UIFont!
 
-
-    override init(frame: CGRect) {
-
+    override init(frame: CGRect)
+    {
         super.init(frame: frame)
-
         create()
     }
 
-    required init?(coder aDecoder: NSCoder) {
-
+    required init?(coder aDecoder: NSCoder)
+    {
         super.init(coder: aDecoder)
         create()
-
     }
 
-    override func awakeFromNib() {
+    override func awakeFromNib()
+    {
         super.awakeFromNib()
         updateProgress()
     }
-    
-    func create() {
 
+    func create()
+    {
         self.backgroundColor = UIColor.clear
         self.isOpaque = false
-
 
         createTextField()
         createParagraphStyle()
@@ -289,33 +286,30 @@ class DonutChart: UIView {
         createFonts()
         updateText()
         addSubview(percentageText!)
-
     }
 
-    private func createTextField() {
-
+    private func createTextField()
+    {
         percentageText = UILabel()
         percentageText?.textAlignment = NSTextAlignment.center
         percentageText?.lineBreakMode = NSLineBreakMode.byWordWrapping
     }
 
-    fileprivate func createParagraphStyle() {
-
+    fileprivate func createParagraphStyle()
+    {
         paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle?.lineHeightMultiple = 0.8
         paragraphStyle?.alignment = NSTextAlignment.center
-
     }
 
-    fileprivate func createFonts() {
-
+    fileprivate func createFonts()
+    {
         font = UIFont(name: fontFamily, size: fontSize)
         percentageSignFont = UIFont(name: percentageSignFontFamily, size: percentageSignFontSize)
-
     }
 
-    fileprivate func createLayers() {
-
+    fileprivate func createLayers()
+    {
         outlineLayer = CAShapeLayer()
         progressLayer = CAShapeLayer()
 
@@ -327,61 +321,58 @@ class DonutChart: UIView {
 
         progressLayer?.lineWidth = CGFloat(thickness)
         progressLayer?.fillColor = UIColor.clear.cgColor
-
     }
 
-    fileprivate func setFrameOfTextField() {
-
+    fileprivate func setFrameOfTextField()
+    {
         var textFrame: CGRect
-
         let offset = thickness * outlinePlacement.rawValue
         let textFieldWidth = _radius * 1.5 - offset
 
         textFrame = CGRect(x: Double(self.frame.width) / 2 - textFieldWidth / 2 + offset/2,
-                           y: Double(self.frame.height) / 2 - textFieldWidth / 2 + offset/2,
-                           width: textFieldWidth,
-                           height: textFieldWidth)
+                y: Double(self.frame.height) / 2 - textFieldWidth / 2 + offset/2,
+                width: textFieldWidth,
+                height: textFieldWidth)
 
         percentageText?.frame = textFrame
     }
 
-    fileprivate func setFrameOfOutlineLayer() {
-
+    fileprivate func setFrameOfOutlineLayer()
+    {
         let outlineCirclePositionOffset = thickness * outlinePlacement.rawValue;
-
         let rect = CGRect(x: Double(self.frame.width) / 2 - _radius - outlineCirclePositionOffset / 2,
                 y: Double(self.frame.height) / 2 - _radius - outlineCirclePositionOffset / 2,
                 width: _radius * 2 + outlineCirclePositionOffset,
                 height: _radius * 2 + outlineCirclePositionOffset)
 
         outlineLayer?.path = UIBezierPath(roundedRect: rect, cornerRadius: CGFloat(radius)).cgPath
-
     }
 
-    fileprivate func setFrameOfProgressLayer() {
-
+    fileprivate func setFrameOfProgressLayer()
+    {
         let rect = CGRect(x: Double(self.frame.width) / 2 - _radius,
                 y: Double(self.frame.height) / 2 - _radius,
                 width: _radius * 2,
                 height: _radius * 2)
 
         progressLayer?.path = UIBezierPath(roundedRect: rect, cornerRadius: CGFloat(radius * 2)).cgPath
-
     }
 
-    fileprivate func updateText() {
-
+    fileprivate func updateText()
+    {
         let percentage = Int(ceil(_progress * 100.0))
         var percentageString = "\(percentage)"
 
-        if(isPercentageSignVisible){
+        if(isPercentageSignVisible)
+        {
             percentageText?.numberOfLines = 0
             attributedString = NSMutableAttributedString(string: percentageString + "\n%")
             attributedString.addAttribute(NSFontAttributeName, value: font, range: NSRange(location: 0, length: percentageString.utf8.count))
             attributedString.addAttribute(NSFontAttributeName, value: percentageSignFont, range: NSRange(location: percentageString.utf8.count+1, length: 1))
             attributedString.addAttribute(NSParagraphStyleAttributeName, value: paragraphStyle!, range: NSRange(location: 0, length: attributedString.string.utf8.count))
             self.percentageText?.attributedText = self.attributedString ?? NSAttributedString(string: "")
-        }else{
+        }else
+        {
             percentageText?.numberOfLines = 1
             attributedString = NSMutableAttributedString(string: percentageString)
             attributedString.addAttribute(NSFontAttributeName, value: font, range: NSRange(location: 0, length: percentageString.utf8.count))
@@ -390,16 +381,17 @@ class DonutChart: UIView {
         }
     }
 
-    fileprivate func updateProgress() {
-
+    fileprivate func updateProgress()
+    {
         progressLayer?.strokeEnd = CGFloat(_progress)
         updateText()
         self.setNeedsDisplay()
     }
 
-    override func display(_ layer: CALayer) {
-        
-        if let pLayer = layer.presentation() as? AnimationLayer {
+    override func display(_ layer: CALayer)
+    {
+        if let pLayer = layer.presentation() as? AnimationLayer
+        {
             progressLayer?.strokeEnd = CGFloat(pLayer.progress)
             progressLayer?.strokeColor = pLayer.progressColor
             outlineLayer?.strokeColor = pLayer.outlineColor
@@ -426,6 +418,5 @@ class DonutChart: UIView {
             _outlineWidth = Double(pLayer.outlineWidth)
         }
     }
-    
 }
 
