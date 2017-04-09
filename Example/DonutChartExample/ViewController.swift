@@ -13,24 +13,16 @@ class ViewController: UIViewController{
     @IBOutlet weak var animatedChart: DonutChart!
     
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    override func viewDidAppear(_ animated: Bool){
+        super.viewDidAppear(animated)
         animate(aChart:animatedChart)
     }
     
     func animate(aChart chart : DonutChart)
     {
-        let animation = CABasicAnimation(keyPath: "progress")
-        animation.toValue = 1.0
-        animation.duration = 2
-        animation.repeatDuration = 2
-        animation.fillMode = kCAFillModeForwards
-        animation.beginTime = CACurrentMediaTime()+1
-        animation.repeatCount = .infinity
-        animation.autoreverses = true
-        animation.isRemovedOnCompletion = false
-        chart.layer.add(animation, forKey: "progress")
-
+        UIView.animate(withDuration: 2.0, animations: {
+            chart.progress = 1.0
+        })
     }
 
     override func didReceiveMemoryWarning() {

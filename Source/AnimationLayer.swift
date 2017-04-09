@@ -8,37 +8,50 @@ import QuartzCore
 
 class AnimationLayer: CALayer
 {
-    var animationCallBack : (()->())?
-    var progress: Double = 0
+
+    @NSManaged var progress: CGFloat
 
     override init() {
         super.init()
     }
     
     override init(layer: Any) {
-        
-        progress = (layer is AnimationLayer) ? (layer as! AnimationLayer).progress : 0
         super.init(layer: layer)
+        if let layer = layer as? AnimationLayer {
+            progress = layer.progress
+        }
     }
     
-    required init?(coder decoder: NSCoder) {
-        super.init(coder: decoder)
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+    }
+    
+    fileprivate class func isCustomAnimKey(_ key: String) -> Bool {
+        var keys = ["progress"]
+        return try keys.contains(key)
     }
     
     override class func needsDisplay(forKey key: String) -> Bool {
-
-        if(key == "progress"){
+        if self.isCustomAnimKey(key) {
             return true
         }
         return super.needsDisplay(forKey: key)
     }
     
-    override func display() {
-
-        if let presentation = self.presentation(){
-            self.progress = presentation.progress
-            animationCallBack?()
+    override func action(forKey event: String) -> CAAction? {
+        if AnimationLayer.isCustomAnimKey(event) {
+            if let animation = super.action(forKey: "backgroundColor") as? CABasicAnimation {
+                animation.keyPath = event
+                if let pLayer = presentation() {
+                    animation.fromValue = pLayer.progress
+                }
+                animation.toValue = nil
+                return animation
+            }
+            setNeedsDisplay()
+            return nil
         }
+        return super.action(forKey: event)
     }
     
 }

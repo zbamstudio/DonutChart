@@ -37,7 +37,7 @@ class DonutChart: UIView {
         didSet {
 
             progressLayer?.strokeColor = progressColor.cgColor
-            setDisplayIsDirty()
+            self.setNeedsDisplay()
         }
     }
 
@@ -47,7 +47,7 @@ class DonutChart: UIView {
         didSet {
 
             outlineLayer?.strokeColor = outlineColor.cgColor
-            setDisplayIsDirty()
+            self.setNeedsDisplay()
         }
     }
 
@@ -57,18 +57,17 @@ class DonutChart: UIView {
         didSet {
 
             percentageText?.textColor = textColor
-            setDisplayIsDirty()
+            self.setNeedsDisplay()
         }
     }
     
-
     @IBInspectable
     var radius: Double = 100 {
         didSet {
             setFrameOfOutlineLayer()
             setFrameOfProgressLayer()
             setFrameOfTextField()
-            setDisplayIsDirty()
+            self.setNeedsDisplay()
         }
     }
 
@@ -80,7 +79,7 @@ class DonutChart: UIView {
             setFrameOfOutlineLayer()
             setFrameOfProgressLayer()
             setFrameOfTextField()
-            setDisplayIsDirty()
+            self.setNeedsDisplay()
         }
     }
 
@@ -88,23 +87,28 @@ class DonutChart: UIView {
     var outlineWidth: Double = 1 {
         didSet {
             self.outlineLayer?.lineWidth = CGFloat(outlineWidth)
-            setDisplayIsDirty()
+            self.setNeedsDisplay()
         }
 
     }
-    private var _progress :Double = 0.2
+    
+    var _localProgress: CGFloat = 0.0
+    
     @IBInspectable
-    var progress: Double{
-        
-        get{
-            return _progress
-        }
-        set
-        {
-            _progress = min(max(newValue, 0),1.0)
-            layerProgress = _progress
+
+    var progress: CGFloat {
+        set {
+
+            if let layer = layer as? AnimationLayer {
+                layer.progress = newValue
+            }
+
+            _localProgress = newValue
             updateProgress()
-            setDisplayIsDirty()
+
+        }
+        get {
+            return _localProgress
         }
     }
 
@@ -112,7 +116,7 @@ class DonutChart: UIView {
         didSet {
             createFonts()
             updateText()
-            setDisplayIsDirty()
+            self.setNeedsDisplay()
         }
     }
 
@@ -120,7 +124,7 @@ class DonutChart: UIView {
         didSet {
             createFonts()
             updateText()
-            setDisplayIsDirty()
+            self.setNeedsDisplay()
         }
     }
 
@@ -128,7 +132,7 @@ class DonutChart: UIView {
         didSet {
             createFonts()
             updateText()
-            setDisplayIsDirty()
+            self.setNeedsDisplay()
         }
     }
 
@@ -136,14 +140,14 @@ class DonutChart: UIView {
         didSet {
             createFonts()
             updateText()
-            setDisplayIsDirty()
+            self.setNeedsDisplay()
         }
     }
     
     @IBInspectable var isPercentageSignVisible : Bool = true {
         didSet{
             updateText()
-            setDisplayIsDirty()
+            self.setNeedsDisplay()
         }
     }
     
@@ -165,50 +169,44 @@ class DonutChart: UIView {
             setFrameOfOutlineLayer()
             setFrameOfProgressLayer()
             setFrameOfTextField()
-            setDisplayIsDirty()
+            self.setNeedsDisplay()
         }
         get{
             return _outlinePlacementInterfaceAdapter
         }
     }
-
+    
+    
     var outlinePlacement: OutlinePlacement = .Inside {
         didSet {
 
-            setDisplayIsDirty()
+            self.setNeedsDisplay()
         }
     }
 
     private var font: UIFont!
     private var percentageSignFont: UIFont!
 
-    fileprivate var layerProgress: Double {
-
-        set {
-            (self.layer as! AnimationLayer).progress = newValue;
-        }
-        get {
-            return (self.layer as! AnimationLayer).progress
-        }
-
-    }
 
     override init(frame: CGRect) {
 
         super.init(frame: frame)
 
         create()
-        (self.layer as! AnimationLayer).animationCallBack = animationCallback
     }
 
     required init?(coder aDecoder: NSCoder) {
 
         super.init(coder: aDecoder)
-
         create()
-        (self.layer as! AnimationLayer).animationCallBack = animationCallback
+
     }
 
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        updateProgress()
+    }
+    
     func create() {
 
         self.backgroundColor = UIColor.clear
@@ -309,7 +307,7 @@ class DonutChart: UIView {
 
     fileprivate func updateText() {
 
-        let percentage = Int(ceil(layerProgress * 100.0))
+        let percentage = Int(ceil(_localProgress * 100.0))
         var percentageString = "\(percentage)"
 
         if(isPercentageSignVisible){
@@ -326,25 +324,23 @@ class DonutChart: UIView {
             attributedString.addAttribute(NSParagraphStyleAttributeName, value: paragraphStyle!, range: NSRange(location: 0, length: attributedString.string.utf8.count))
             self.percentageText?.attributedText = self.attributedString
         }
-
-    }
-
-    fileprivate func setDisplayIsDirty() {
-
-        self.setNeedsDisplay()
-
     }
 
     fileprivate func updateProgress() {
 
-        progressLayer?.strokeEnd = CGFloat(layerProgress)
+        progressLayer?.strokeEnd = CGFloat(_localProgress)
         updateText()
+        self.setNeedsDisplay()
+    }
+
+    override func display(_ layer: CALayer) {
+        
+        if let pLayer = layer.presentation() as? AnimationLayer {
+            progressLayer?.strokeEnd = CGFloat(pLayer.progress)
+            updateText()
+            _localProgress = pLayer.progress
+        }
     }
     
-    fileprivate func animationCallback()
-    {
-        updateProgress()
-        setDisplayIsDirty()
-    }
 }
 

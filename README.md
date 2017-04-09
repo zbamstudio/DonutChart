@@ -7,14 +7,12 @@ An animatable donut chart view written in swift 3.
 
 ![alt tag](https://raw.githubusercontent.com/zbamstudio/DonutChart/master/ReadmeAssets/donutChartInterfaceDesign.gif)
 
-* Progress of the chart can be animated with CABasicAnimation
+* Progress of the chart can be animated with CABasicAnimation or UIView.animate
 ```Swift
-        let animation = CABasicAnimation(keyPath: "progress")
-        animation.fromValue = 0.2
-        animation.toValue = 1.0
-        animation.duration = 2
-        animation.fillMode = kCAFillModeForwards
-        chart.layer.add(animation, forKey: "progress")
+
+     UIView.animate(withDuration: 2.0, animations: {
+         chart.progress = 1.0
+     })
 ```
 * Can achieve large variety of look & feel
 
