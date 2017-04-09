@@ -31,69 +31,8 @@ class DonutChart: UIView {
         return AnimationLayer.self
     }
 
-    @IBInspectable
-    var progressColor: UIColor = UIColor.black
-    {
-        didSet {
+    fileprivate var _progress: CGFloat = 0.0
 
-            progressLayer?.strokeColor = progressColor.cgColor
-            self.setNeedsDisplay()
-        }
-    }
-
-    @IBInspectable
-    var outlineColor: UIColor = UIColor.black
-    {
-        didSet {
-
-            outlineLayer?.strokeColor = outlineColor.cgColor
-            self.setNeedsDisplay()
-        }
-    }
-
-    @IBInspectable
-    var textColor: UIColor = UIColor.black
-    {
-        didSet {
-
-            percentageText?.textColor = textColor
-            self.setNeedsDisplay()
-        }
-    }
-    
-    @IBInspectable
-    var radius: Double = 100 {
-        didSet {
-            setFrameOfOutlineLayer()
-            setFrameOfProgressLayer()
-            setFrameOfTextField()
-            self.setNeedsDisplay()
-        }
-    }
-
-    @IBInspectable
-    var thickness: Double = 10 {
-        didSet {
-            
-            progressLayer?.lineWidth = CGFloat(thickness)
-            setFrameOfOutlineLayer()
-            setFrameOfProgressLayer()
-            setFrameOfTextField()
-            self.setNeedsDisplay()
-        }
-    }
-
-    @IBInspectable
-    var outlineWidth: Double = 1 {
-        didSet {
-            self.outlineLayer?.lineWidth = CGFloat(outlineWidth)
-            self.setNeedsDisplay()
-        }
-
-    }
-    
-    var _localProgress: CGFloat = 0.0
-    
     @IBInspectable
 
     var progress: CGFloat {
@@ -103,13 +42,140 @@ class DonutChart: UIView {
                 layer.progress = newValue
             }
 
-            _localProgress = newValue
+            _progress = newValue
             updateProgress()
 
         }
         get {
-            return _localProgress
+            return _progress
         }
+    }
+
+    fileprivate var _progressColor: UIColor = UIColor.black
+
+    @IBInspectable
+    var progressColor: UIColor
+    {
+        set {
+
+            if let layer = layer as? AnimationLayer {
+                layer.progressColor = newValue.cgColor
+            }
+            _progressColor = newValue
+            progressLayer?.strokeColor = _progressColor.cgColor
+            self.setNeedsDisplay()
+        }
+        get
+        {
+            return _progressColor
+        }
+    }
+
+    fileprivate var _outlineColor: UIColor = UIColor.black
+
+    @IBInspectable
+    var outlineColor: UIColor
+    {
+        set {
+
+            if let layer = layer as? AnimationLayer {
+                layer.outlineColor = newValue.cgColor
+            }
+            _outlineColor = newValue
+            outlineLayer?.strokeColor = _outlineColor.cgColor
+            self.setNeedsDisplay()
+        }
+        get
+        {
+            return _outlineColor
+        }
+    }
+
+    fileprivate var _textColor: UIColor = UIColor.black
+
+    @IBInspectable
+    var textColor: UIColor
+    {
+        set {
+
+            if let layer = layer as? AnimationLayer {
+                layer.textColor = newValue.cgColor
+            }
+            _textColor = newValue
+            percentageText?.textColor = _textColor
+            self.setNeedsDisplay()
+        }
+        get
+        {
+            return _textColor
+        }
+
+    }
+
+    fileprivate var _radius: Double = 100.0
+
+    @IBInspectable
+    var radius: Double {
+
+        set {
+
+            if let layer = layer as? AnimationLayer {
+                layer.radius = CGFloat(newValue)
+            }
+            _radius = newValue
+            setFrameOfOutlineLayer()
+            setFrameOfProgressLayer()
+            setFrameOfTextField()
+            self.setNeedsDisplay()
+        }
+        get
+        {
+            return _radius
+        }
+    }
+
+    fileprivate var _thickness : Double = 10
+    @IBInspectable
+    var thickness: Double{
+
+
+        set {
+
+            if let layer = layer as? AnimationLayer {
+                layer.thickness = CGFloat(newValue)
+            }
+            _thickness = newValue
+            progressLayer?.lineWidth = CGFloat(_thickness)
+            setFrameOfOutlineLayer()
+            setFrameOfProgressLayer()
+            setFrameOfTextField()
+            self.setNeedsDisplay()
+        }
+        get
+        {
+            return _thickness
+        }
+    }
+
+    fileprivate var _outlineWidth : Double = 1
+
+    @IBInspectable
+    var outlineWidth: Double {
+
+        set {
+
+            if let layer = layer as? AnimationLayer {
+                layer.outlineWidth = CGFloat(newValue)
+            }
+            _outlineWidth = newValue
+            self.outlineLayer?.lineWidth = CGFloat(outlineWidth)
+            self.setNeedsDisplay()
+        }
+        get
+        {
+            return _outlineWidth
+        }
+
     }
 
     @IBInspectable var fontSize: CGFloat = 12 {
@@ -231,7 +297,6 @@ class DonutChart: UIView {
         percentageText = UILabel()
         percentageText?.textAlignment = NSTextAlignment.center
         percentageText?.lineBreakMode = NSLineBreakMode.byWordWrapping
-
     }
 
     fileprivate func createParagraphStyle() {
@@ -241,7 +306,6 @@ class DonutChart: UIView {
         paragraphStyle?.alignment = NSTextAlignment.center
 
     }
-
 
     fileprivate func createFonts() {
 
@@ -271,12 +335,12 @@ class DonutChart: UIView {
         var textFrame: CGRect
 
         let offset = thickness * outlinePlacement.rawValue
-        let textFieldWidth = radius - offset
+        let textFieldWidth = _radius * 1.5 - offset
 
-        textFrame = CGRect(x: Double(self.frame.width) / 2 - radius + textFieldWidth / 2 + offset/2,
-                           y: Double(self.frame.height) / 2 - radius + textFieldWidth / 2 + offset/2,
-                           width: textFieldWidth+offset,
-                           height: textFieldWidth+offset)
+        textFrame = CGRect(x: Double(self.frame.width) / 2 - textFieldWidth / 2 + offset/2,
+                           y: Double(self.frame.height) / 2 - textFieldWidth / 2 + offset/2,
+                           width: textFieldWidth,
+                           height: textFieldWidth)
 
         percentageText?.frame = textFrame
     }
@@ -285,10 +349,10 @@ class DonutChart: UIView {
 
         let outlineCirclePositionOffset = thickness * outlinePlacement.rawValue;
 
-        let rect = CGRect(x: Double(self.frame.width) / 2 - radius - outlineCirclePositionOffset / 2,
-                y: Double(self.frame.height) / 2 - radius - outlineCirclePositionOffset / 2,
-                width: radius * 2 + outlineCirclePositionOffset,
-                height: radius * 2 + outlineCirclePositionOffset)
+        let rect = CGRect(x: Double(self.frame.width) / 2 - _radius - outlineCirclePositionOffset / 2,
+                y: Double(self.frame.height) / 2 - _radius - outlineCirclePositionOffset / 2,
+                width: _radius * 2 + outlineCirclePositionOffset,
+                height: _radius * 2 + outlineCirclePositionOffset)
 
         outlineLayer?.path = UIBezierPath(roundedRect: rect, cornerRadius: CGFloat(radius)).cgPath
 
@@ -296,10 +360,10 @@ class DonutChart: UIView {
 
     fileprivate func setFrameOfProgressLayer() {
 
-        let rect = CGRect(x: Double(self.frame.width) / 2 - radius,
-                y: Double(self.frame.height) / 2 - radius,
-                width: (radius) * 2,
-                height: (radius) * 2)
+        let rect = CGRect(x: Double(self.frame.width) / 2 - _radius,
+                y: Double(self.frame.height) / 2 - _radius,
+                width: _radius * 2,
+                height: _radius * 2)
 
         progressLayer?.path = UIBezierPath(roundedRect: rect, cornerRadius: CGFloat(radius * 2)).cgPath
 
@@ -307,7 +371,7 @@ class DonutChart: UIView {
 
     fileprivate func updateText() {
 
-        let percentage = Int(ceil(_localProgress * 100.0))
+        let percentage = Int(ceil(_progress * 100.0))
         var percentageString = "\(percentage)"
 
         if(isPercentageSignVisible){
@@ -328,7 +392,7 @@ class DonutChart: UIView {
 
     fileprivate func updateProgress() {
 
-        progressLayer?.strokeEnd = CGFloat(_localProgress)
+        progressLayer?.strokeEnd = CGFloat(_progress)
         updateText()
         self.setNeedsDisplay()
     }
@@ -337,8 +401,29 @@ class DonutChart: UIView {
         
         if let pLayer = layer.presentation() as? AnimationLayer {
             progressLayer?.strokeEnd = CGFloat(pLayer.progress)
+            progressLayer?.strokeColor = pLayer.progressColor
+            outlineLayer?.strokeColor = pLayer.outlineColor
+            progressLayer?.lineWidth = pLayer.thickness
+            percentageText?.textColor = UIColor(cgColor: pLayer.textColor)
+            outlineLayer?.lineWidth = pLayer.outlineWidth
+
+            if(Double(pLayer.radius) != _radius || Double(pLayer.thickness) != _thickness)
+            {
+                _radius = Double(pLayer.radius)
+                _thickness = Double(pLayer.thickness)
+                setFrameOfTextField()
+                setFrameOfOutlineLayer()
+                setFrameOfProgressLayer()
+            }
+
             updateText()
-            _localProgress = pLayer.progress
+
+            _progress = pLayer.progress
+            _progressColor = UIColor(cgColor: pLayer.progressColor)
+            _outlineColor = UIColor(cgColor: pLayer.outlineColor)
+            _textColor = UIColor(cgColor: pLayer.textColor)
+            _thickness = Double(pLayer.thickness)
+            _outlineWidth = Double(pLayer.outlineWidth)
         }
     }
     

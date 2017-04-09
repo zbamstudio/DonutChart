@@ -10,6 +10,13 @@ class AnimationLayer: CALayer
 {
 
     @NSManaged var progress: CGFloat
+    @NSManaged var progressColor: CGColor
+    @NSManaged var outlineColor: CGColor
+    @NSManaged var textColor: CGColor
+    @NSManaged var radius: CGFloat
+    @NSManaged var thickness: CGFloat
+    @NSManaged var outlineWidth: CGFloat
+
 
     override init() {
         super.init()
@@ -27,7 +34,7 @@ class AnimationLayer: CALayer
     }
     
     fileprivate class func isCustomAnimKey(_ key: String) -> Bool {
-        var keys = ["progress"]
+        let keys = ["progress","progressColor","outlineColor","textColor","radius","thickness","outlineWidth"]
         return try keys.contains(key)
     }
     
@@ -40,10 +47,11 @@ class AnimationLayer: CALayer
     
     override func action(forKey event: String) -> CAAction? {
         if AnimationLayer.isCustomAnimKey(event) {
+            // get duration and timing of the uiview animation
             if let animation = super.action(forKey: "backgroundColor") as? CABasicAnimation {
                 animation.keyPath = event
                 if let pLayer = presentation() {
-                    animation.fromValue = pLayer.progress
+                    animation.fromValue = pLayer.value(forKey: event)
                 }
                 animation.toValue = nil
                 return animation
@@ -53,6 +61,8 @@ class AnimationLayer: CALayer
         }
         return super.action(forKey: event)
     }
-    
+
+
+
 }
 

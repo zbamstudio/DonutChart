@@ -7,6 +7,7 @@ Copyright (c) [2017] [Emrah Ozer / Zbam Studio]
 
 import UIKit
 import Darwin
+import QuartzCore
 
 class ViewController: UIViewController{
 
@@ -20,9 +21,20 @@ class ViewController: UIViewController{
     
     func animate(aChart chart : DonutChart)
     {
-        UIView.animate(withDuration: 2.0, animations: {
+        UIView.animate(withDuration: 8.0, animations: {
+
+            CATransaction.begin()
+            CATransaction.setAnimationDuration(8.0)
             chart.progress = 1.0
+            chart.progressColor = UIColor.yellow
+            chart.outlineColor = UIColor.black
+            chart.textColor = UIColor.red
+            chart.radius = 80
+            chart.thickness = 15
+            chart.outlineWidth = 5
+            CATransaction.commit()
         })
+
     }
 
     override func didReceiveMemoryWarning() {
