@@ -16,7 +16,6 @@ enum OutlinePlacement: Double {
     case Outside = 1.0
 }
 
-
 @IBDesignable
 class DonutChart: UIView {
 
@@ -104,7 +103,6 @@ class DonutChart: UIView {
         {
             return _textColor
         }
-
     }
 
     fileprivate var _radius: Double = 100.0
@@ -172,9 +170,7 @@ class DonutChart: UIView {
     {
         didSet
         {
-            createFonts()
-            updateText()
-            self.setNeedsDisplay()
+            updateFontProperty()
         }
     }
 
@@ -182,9 +178,7 @@ class DonutChart: UIView {
     {
         didSet
         {
-            createFonts()
-            updateText()
-            self.setNeedsDisplay()
+            updateFontProperty()
         }
     }
 
@@ -192,9 +186,7 @@ class DonutChart: UIView {
     {
         didSet
         {
-            createFonts()
-            updateText()
-            self.setNeedsDisplay()
+            updateFontProperty()
         }
     }
 
@@ -202,9 +194,7 @@ class DonutChart: UIView {
     {
         didSet
         {
-            createFonts()
-            updateText()
-            self.setNeedsDisplay()
+            updateFontProperty()
         }
     }
 
@@ -366,24 +356,39 @@ class DonutChart: UIView {
         if(isPercentageSignVisible)
         {
             percentageText?.numberOfLines = 0
-            attributedString = NSMutableAttributedString(string: percentageString + "\n%")
-            attributedString.addAttribute(NSFontAttributeName, value: font, range: NSRange(location: 0, length: percentageString.utf8.count))
-            attributedString.addAttribute(NSFontAttributeName, value: percentageSignFont, range: NSRange(location: percentageString.utf8.count+1, length: 1))
-            attributedString.addAttribute(NSParagraphStyleAttributeName, value: paragraphStyle!, range: NSRange(location: 0, length: attributedString.string.utf8.count))
-            self.percentageText?.attributedText = self.attributedString ?? NSAttributedString(string: "")
+            createAttributedStringForVisiblePercentageSign(percentageString: percentageString)
+
         }else
         {
             percentageText?.numberOfLines = 1
-            attributedString = NSMutableAttributedString(string: percentageString)
-            attributedString.addAttribute(NSFontAttributeName, value: font, range: NSRange(location: 0, length: percentageString.utf8.count))
-            attributedString.addAttribute(NSParagraphStyleAttributeName, value: paragraphStyle!, range: NSRange(location: 0, length: attributedString.string.utf8.count))
-            self.percentageText?.attributedText = self.attributedString
+            createAttributedStringWithoutPercentageSign(percentageString: percentageString)
         }
+
+        self.percentageText?.attributedText = self.attributedString ?? NSAttributedString(string: "")
+    }
+
+    fileprivate func createAttributedStringWithoutPercentageSign(percentageString: String) {
+        attributedString = NSMutableAttributedString(string: percentageString)
+        attributedString.addAttribute(NSFontAttributeName, value: font, range: NSRange(location: 0, length: percentageString.utf8.count))
+        attributedString.addAttribute(NSParagraphStyleAttributeName, value: paragraphStyle!, range: NSRange(location: 0, length: attributedString.string.utf8.count))
+    }
+
+    fileprivate func createAttributedStringForVisiblePercentageSign(percentageString: String) {
+        attributedString = NSMutableAttributedString(string: percentageString + "\n%")
+        attributedString.addAttribute(NSFontAttributeName, value: font, range: NSRange(location: 0, length: percentageString.utf8.count))
+        attributedString.addAttribute(NSFontAttributeName, value: percentageSignFont, range: NSRange(location: percentageString.utf8.count+1, length: 1))
+        attributedString.addAttribute(NSParagraphStyleAttributeName, value: paragraphStyle!, range: NSRange(location: 0, length: attributedString.string.utf8.count))
     }
 
     fileprivate func updateProgress()
     {
         progressLayer?.strokeEnd = CGFloat(_progress)
+        updateText()
+        self.setNeedsDisplay()
+    }
+
+    fileprivate func updateFontProperty() {
+        createFonts()
         updateText()
         self.setNeedsDisplay()
     }
